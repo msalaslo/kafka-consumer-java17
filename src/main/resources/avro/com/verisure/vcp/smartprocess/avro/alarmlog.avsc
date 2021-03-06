@@ -1,0 +1,23 @@
+{
+  "fields": [
+    {
+      "default": null,
+      "name": "SINS",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "default": null,
+      "name": "SINC",
+      "type": [
+        "null",
+        "int"
+      ]
+    }
+  ],
+  "name": "AlarmlogDTO",
+  "namespace": "com.verisure.vcp.smartprocess.avro",
+  "type": "record"
+}
