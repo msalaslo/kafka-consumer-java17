@@ -19,9 +19,8 @@ public class SmartAlarmlogKafkaTopicConsumer {
 
 	private static final Logger log = Logger.getLogger(SmartAlarmlogKafkaTopicConsumer.class);
 	private static final String TOPIC = "smartprocess.alarmlog";
-//	private static final String BOOTSTRAP_SERVERS = "192.168.1.135:9092";
 	private static final String BOOTSTRAP_SERVERS = "ef1kafkabrk01v:9092";
-	private static final String CLIENT = "smartprocess-event-listener-cpd1";
+	private static final String GROUP_ID = "smartprocess-event-listener-cpd1";
 	private static final String SCHEMA_REGISTRY_URL = "http://ef1kafkareg01v:8081";
 
 	public static void main(String args[]) {
@@ -29,7 +28,7 @@ public class SmartAlarmlogKafkaTopicConsumer {
 		try {
 			Properties props = new Properties();
 			props.put("bootstrap.servers", BOOTSTRAP_SERVERS);
-			props.put("group.id", CLIENT);
+			props.put("group.id", GROUP_ID);
 			props.put("enable.auto.commit", "true");
 			props.put("auto.commit.interval.ms", "1000");
 			props.put("key.deserializer", StringDeserializer.class);
@@ -62,7 +61,6 @@ public class SmartAlarmlogKafkaTopicConsumer {
 							+ ", SINC = " + sinc);
 
 				}
-				consumer.commitAsync();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
