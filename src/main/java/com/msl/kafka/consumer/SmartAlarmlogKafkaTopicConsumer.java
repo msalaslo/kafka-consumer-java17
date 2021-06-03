@@ -31,7 +31,7 @@ public class SmartAlarmlogKafkaTopicConsumer {
 			Properties props = new Properties();
 			props.put("bootstrap.servers", BOOTSTRAP_SERVERS);
 			props.put("group.id", GROUP_ID);
-			props.put("clientId.id", getClientId());
+			props.put("client.id", getClientId());
 			props.put("enable.auto.commit", "true");
 			props.put("auto.commit.interval.ms", "1000");
 			props.put("key.deserializer", StringDeserializer.class);
