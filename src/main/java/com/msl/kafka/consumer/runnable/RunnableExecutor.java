@@ -32,8 +32,8 @@ public class RunnableExecutor {
 
 		final List<SmartAlarmlogKafkaTopicConsumerRunnable> consumers = new ArrayList<>();
 		for (int i = 0; i < numConsumers; i++) {
-			SmartAlarmlogKafkaTopicConsumerRunnable consumer = new SmartAlarmlogKafkaTopicConsumerRunnable(getClientId(i), GROUP_ID,
-					topics);
+			SmartAlarmlogKafkaTopicConsumerRunnable consumer = new SmartAlarmlogKafkaTopicConsumerRunnable(
+					getClientId(i), GROUP_ID, topics);
 			consumers.add(consumer);
 			executor.submit(consumer);
 		}
@@ -54,16 +54,15 @@ public class RunnableExecutor {
 		});
 
 	}
-	
+
 	private static String getClientId(int i) {
 		String clientId = "default" + i;
 		try {
-			String hostAddress = InetAddress.getLocalHost().getHostAddress();
-			String ip = InetAddress.getLocalHost().getHostName();
-			log.info("Host name:" + hostAddress + ", ip:" + ip);
-			clientId = hostAddress;
+			String hostAddress = InetAddress.getLocalHost().getCanonicalHostName();
+			clientId = i + hostAddress;
+			log.info("Client Id for kafka producer:" + clientId);
 		} catch (UnknownHostException e) {
-			log.warn("Error getting host name, using default clientId:" + clientId, e);
+			log.error("Error getting host name, using default clientId:" + clientId, e);
 		}
 		return clientId;
 	}
