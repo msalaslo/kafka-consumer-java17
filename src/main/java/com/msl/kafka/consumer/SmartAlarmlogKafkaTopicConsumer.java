@@ -78,12 +78,11 @@ public class SmartAlarmlogKafkaTopicConsumer {
 	private static String getClientId() {
 		String clientId = "default";
 		try {
-			String hostAddress = InetAddress.getLocalHost().getHostAddress();
-			String ip = InetAddress.getLocalHost().getHostName();
-			log.info("Host name:" + hostAddress + ", ip:" + ip);
+			String hostAddress = InetAddress.getLocalHost().getCanonicalHostName();
 			clientId = hostAddress;
+			log.info("Client Id for kafka producer:" + clientId);
 		} catch (UnknownHostException e) {
-			log.warn("Error getting host name, using default clientId:" + clientId, e);
+			log.error("Error getting host name, using default clientId:" + clientId, e);
 		}
 		return clientId;
 	}
