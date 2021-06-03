@@ -1,5 +1,7 @@
 package com.msl.kafka.consumer;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -29,6 +31,7 @@ public class SmartAlarmlogKafkaTopicConsumer {
 			Properties props = new Properties();
 			props.put("bootstrap.servers", BOOTSTRAP_SERVERS);
 			props.put("group.id", GROUP_ID);
+			props.put("clientId.id", getClientId());
 			props.put("enable.auto.commit", "true");
 			props.put("auto.commit.interval.ms", "1000");
 			props.put("key.deserializer", StringDeserializer.class);
@@ -46,7 +49,7 @@ public class SmartAlarmlogKafkaTopicConsumer {
 			props.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
 
 			// NO DEJAR EN PRO, SOLO PARA PRUEBAS (Lee desde el primer mensaje)
-			props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+//			props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
 			consumer = new KafkaConsumer<>(props);
 
@@ -70,5 +73,18 @@ public class SmartAlarmlogKafkaTopicConsumer {
 				consumer.close();
 			}
 		}
+	}
+	
+	private static String getClientId() {
+		String clientId = "default";
+		try {
+			String hostAddress = InetAddress.getLocalHost().getHostAddress();
+			String ip = InetAddress.getLocalHost().getHostName();
+			log.info("Host name:" + hostAddress + ", ip:" + ip);
+			clientId = hostAddress;
+		} catch (UnknownHostException e) {
+			log.warn("Error getting host name, using default clientId:" + clientId, e);
+		}
+		return clientId;
 	}
 }

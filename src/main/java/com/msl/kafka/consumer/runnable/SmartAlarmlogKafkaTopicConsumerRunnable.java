@@ -7,7 +7,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.log4j.Logger;
 
@@ -24,14 +23,15 @@ public class SmartAlarmlogKafkaTopicConsumerRunnable implements Runnable {
 
 	KafkaConsumer<String, AlarmlogDTO> consumer;
 	private List<String> topics;
-	private int id;
+	private String clientId;
 
-	public SmartAlarmlogKafkaTopicConsumerRunnable(int id, String groupId, List<String> topics) {
-		this.id = id;
+	public SmartAlarmlogKafkaTopicConsumerRunnable(String clientId, String groupId, List<String> topics) {
 		this.topics = topics;
+		this.clientId = clientId;
 		Properties props = new Properties();
 		props.put("bootstrap.servers", BOOTSTRAP_SERVERS);
 		props.put("group.id", groupId);
+		props.put("client.id", clientId);
 		props.put("enable.auto.commit", "true");
 		props.put("auto.commit.interval.ms", "1000");
 		props.put("key.deserializer", StringDeserializer.class);
@@ -65,13 +65,13 @@ public class SmartAlarmlogKafkaTopicConsumerRunnable implements Runnable {
 					AlarmlogDTO alarmlogDto = record.value();
 					int sinc = alarmlogDto.getSINC();
 					int sins = alarmlogDto.getSINS();
-					log.info("consumer id:" + this.id + ", offset = " + record.offset() + ", key = " + record.offset() + ", SINS = " + sins
+					log.info("consumer id:" + this.clientId + ", offset = " + record.offset() + ", key = " + record.offset() + ", SINS = " + sins
 							+ ", SINC = " + sinc);
 
 				}
 			}
-		} catch (WakeupException e) {
-			// ignore for shutdown
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			consumer.close();
 		}

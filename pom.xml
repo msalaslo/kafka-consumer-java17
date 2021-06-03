@@ -22,13 +22,16 @@
 		<confluent.version>4.1.4</confluent.version>
 	</properties>
 	<dependencies>
+		<!-- dependency> <groupId>org.apache.kafka</groupId> <artifactId>kafka_${kafka.artifact.id.version}</artifactId> 
+			<version>${kafka.version}</version> </dependency -->
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka_${kafka.artifact.id.version}</artifactId>
+			<artifactId>kafka-clients</artifactId>
 			<version>${kafka.version}</version>
 		</dependency>
-		<!-- AVRO library to manage GenericRecords and SpecificRecords, 
-		in this project we generate SpecificRecords (as DTO) with the avro-maven-plugin -->
+
+		<!-- AVRO library to manage GenericRecords and SpecificRecords, in this 
+			project we generate SpecificRecords (as DTO) with the avro-maven-plugin -->
 		<dependency>
 			<groupId>org.apache.avro</groupId>
 			<artifactId>avro</artifactId>
