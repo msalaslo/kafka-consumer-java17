@@ -16,7 +16,6 @@
 		<project.artifact.name>${project.artifactId}</project.artifact.name>
 		<!-- Last Kafka version compatible with Java 1.7 -->
 		<kafka.version>0.10.2.2</kafka.version>
-		<kafka.artifact.id.version>2.12</kafka.artifact.id.version>
 		<avro.version>1.8.1</avro.version>
 		<!-- Last Confluent version compatible with Java 1.7 -->
 		<confluent.version>4.1.4</confluent.version>

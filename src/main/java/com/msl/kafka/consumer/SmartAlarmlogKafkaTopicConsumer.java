@@ -61,7 +61,6 @@ public class SmartAlarmlogKafkaTopicConsumer {
 					int sins = alarmlogDto.getSINS();
 					log.info("offset = " + record.offset() + ", key = " + record.offset() + ", SINS = " + sins
 							+ ", SINC = " + sinc);
-
 				}
 			}
 		} catch (Exception e) {

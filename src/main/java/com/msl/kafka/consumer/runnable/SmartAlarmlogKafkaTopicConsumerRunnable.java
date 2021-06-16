@@ -58,7 +58,6 @@ public class SmartAlarmlogKafkaTopicConsumerRunnable implements Runnable {
 	public void run() {
 		try {
 			consumer.subscribe(topics);
-
 			while (true) {
 				ConsumerRecords<String, AlarmlogDTO> records = consumer.poll(10);
 				for (ConsumerRecord<String, AlarmlogDTO> record : records) {
@@ -67,7 +66,6 @@ public class SmartAlarmlogKafkaTopicConsumerRunnable implements Runnable {
 					int sins = alarmlogDto.getSINS();
 					log.info("consumer id:" + this.clientId + ", offset = " + record.offset() + ", key = " + record.offset() + ", SINS = " + sins
 							+ ", SINC = " + sinc);
-
 				}
 			}
 		} catch (Exception e) {
